@@ -132,8 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let formatted = '';
         if (value.length < 4) {
             formatted = value;
-        } else if (value.length < 8) {
+        } else if (value.length < 7) {
             formatted = `${value.slice(0, 3)}-${value.slice(3)}`;
+        } else if (value.length < 11) {
+            formatted = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6)}`;
         } else {
             formatted = `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7)}`;
         }
