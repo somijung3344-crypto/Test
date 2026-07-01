@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Supabase Client
+    const { createClient } = window.supabase;
+    const supabaseUrl = 'https://motmnnvwzxppuemgdbwl.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdG1ubnZ3enhwcHVlbWdkYndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4NjAwODksImV4cCI6MjA5ODQzNjA4OX0.BD04zk6zDyK5mBzGUvi7XfXX78GgzfZ9xkUorOGxkOw';
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
     // DOM Elements
     const signupForm = document.getElementById('signupForm');
     
@@ -294,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 7. Form Submission
     // ==========================================
-    signupForm.addEventListener('submit', (e) => {
+    signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         // Mark all fields as touched to trigger error states
@@ -330,64 +336,83 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // ==========================================
-        // 8. Successful Registration Flow (Simulated DB)
-        // ==========================================
+        // Show loading state on button
+        const submitBtn = document.getElementById('submitBtn');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>가입 처리 중...</span>';
+
         const userData = {
-            userId: userIdInput.value.trim(),
-            password: passwordInput.value, // Hashed in production
+            user_id: userIdInput.value.trim(),
+            password: passwordInput.value, 
             email: emailInput.value.trim(),
-            phone: phoneInput.value.trim()
+            phone_number: phoneInput.value.trim()
         };
 
-        // 8a. Retrieve existing users from Local Storage or initialize empty array
-        const registeredUsers = JSON.parse(localStorage.getItem('yjuUsers') || '[]');
-        
-        // 8b. Simulate checking DB for UNIQUE constraint violations (user_id and email)
-        const isIdDuplicate = registeredUsers.some(u => u.userId === userData.userId);
-        const isEmailDuplicate = registeredUsers.some(u => u.email === userData.email);
+        try {
+            // Insert user into Supabase
+            const { data, error } = await supabase
+                .from('member')
+                .insert([userData])
+                .select();
 
-        if (isIdDuplicate) {
-            setError(userIdGroup);
-            document.getElementById('userIdMsg').textContent = '이미 사용 중인 아이디입니다.';
-            document.getElementById('userIdMsg').style.display = 'flex';
-            userIdInput.focus();
-            return;
+            if (error) {
+                // If it is a duplicate key violation
+                if (error.code === '23505') {
+                    if (error.message.includes('member_user_id_key')) {
+                        setError(userIdGroup);
+                        document.getElementById('userIdMsg').textContent = '이미 사용 중인 아이디입니다.';
+                        document.getElementById('userIdMsg').style.display = 'flex';
+                        userIdInput.focus();
+                    } else if (error.message.includes('member_email_key')) {
+                        setError(emailGroup);
+                        document.getElementById('emailMsg').textContent = '이미 등록된 이메일 주소입니다.';
+                        document.getElementById('emailMsg').style.display = 'flex';
+                        emailInput.focus();
+                    } else {
+                        alert('이미 등록된 정보입니다. 다시 확인해 주세요.');
+                    }
+                } else {
+                    console.error('Supabase error:', error);
+                    alert('데이터베이스 오류가 발생했습니다: ' + error.message);
+                }
+                return;
+            }
+
+            // Successfully registered!
+            const insertedUser = data[0];
+            
+            // Save to session storage for the welcome page
+            const sessionUserData = {
+                num: insertedUser.num,
+                userId: insertedUser.user_id,
+                email: insertedUser.email,
+                phone: insertedUser.phone_number,
+                created_at: insertedUser.created_at
+            };
+            sessionStorage.setItem('currentUser', JSON.stringify(sessionUserData));
+
+            // Log success details
+            console.group('%c🔑 Yeungjin University Portal DB Integration (Supabase)', 'color: #0B3364; font-size: 14px; font-weight: bold;');
+            console.log('%c[SQL Query Issued]%c INSERT INTO users (user_id, password, email, phone_number) VALUES (?, ?, ?, ?) RETURNING *;', 'color: #8E44AD; font-weight: bold;', 'color: #2C3E50;');
+            console.log('%c[Database Response]%c Row inserted successfully into remote database:', 'color: #27AE60; font-weight: bold;', 'color: #2D3748;');
+            console.table([insertedUser]);
+            console.groupEnd();
+
+            // Populate Modal and show it
+            modalUserId.textContent = sessionUserData.userId;
+            modalEmail.textContent = sessionUserData.email;
+            modalPhone.textContent = sessionUserData.phone;
+            
+            successModal.classList.add('active');
+
+        } catch (err) {
+            console.error('Registration failed:', err);
+            alert('회원가입 중 오류가 발생했습니다.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
         }
-
-        if (isEmailDuplicate) {
-            setError(emailGroup);
-            document.getElementById('emailMsg').textContent = '이미 등록된 이메일 주소입니다.';
-            document.getElementById('emailMsg').style.display = 'flex';
-            emailInput.focus();
-            return;
-        }
-
-        // 8c. Calculate new primary key auto-increment number
-        const nextNum = registeredUsers.length > 0 ? Math.max(...registeredUsers.map(u => u.num || 0)) + 1 : 1;
-        userData.num = nextNum;
-        userData.created_at = new Date().toISOString();
-
-        // 8d. Push to mock database (Local Storage)
-        registeredUsers.push(userData);
-        localStorage.setItem('yjuUsers', JSON.stringify(registeredUsers));
-        sessionStorage.setItem('currentUser', JSON.stringify(userData));
-
-        // 8e. Display success logs mimicking database actions in developers console
-        console.group('%c🔑 Yeungjin University Portal DB Simulation', 'color: #0B3364; font-size: 14px; font-weight: bold;');
-        console.log('%c[SQL Query Issued]%c INSERT INTO users (user_id, password, email, phone_number) VALUES (?, ?, ?, ?);', 'color: #8E44AD; font-weight: bold;', 'color: #2C3E50;');
-        console.log(`%c[SQL Params]%c num: ${userData.num}, user_id: "${userData.userId}", password: "[Hashed:BCrypt]", email: "${userData.email}", phone_number: "${userData.phone}"`, 'color: #8E44AD; font-weight: bold;', 'color: #2C3E50;');
-        console.log('%c[Database Response]%c 1 row inserted successfully. (Query took 4ms)', 'color: #27AE60; font-weight: bold;', 'color: #2D3748;');
-        console.log('%c[Local Storage Status]%c Current DB Row Count:', 'color: #3498DB; font-weight: bold;', 'color: #2C3E50;', registeredUsers.length);
-        console.table(registeredUsers);
-        console.groupEnd();
-
-        // 8f. Populate Modal content and display it
-        modalUserId.textContent = userData.userId;
-        modalEmail.textContent = userData.email;
-        modalPhone.textContent = userData.phone;
-        
-        successModal.classList.add('active');
     });
 
     // ==========================================

@@ -73,11 +73,16 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 12l6-6M3 12l6 6"/></svg>
                     <span>다시 회원가입하기</span>
                 </button>
+                <button type="button" class="action-btn danger-action" id="deleteAccountBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    <span>회원 탈퇴하기</span>
+                </button>
             </div>
         </div>
     </div>
 
     <!-- 스크립트 실행으로 데이터 불러오기 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Session Storage 에서 가입 유저 정보 획득
@@ -92,7 +97,25 @@
 
             const user = JSON.parse(rawUser);
 
+            // Supabase Client Initialization
+            const { createClient } = window.supabase;
+            const supabaseUrl = 'https://motmnnvwzxppuemgdbwl.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdG1ubnZ3enhwcHVlbWdkYndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4NjAwODksImV4cCI6MjA5ODQzNjA4OX0.BD04zk6zDyK5mBzGUvi7XfXX78GgzfZ9xkUorOGxkOw';
+            const supabase = createClient(supabaseUrl, supabaseKey);
+
             // 3. UI 바인딩
+            if (user.isLogin) {
+                document.querySelector('.badge-success').textContent = 'PORTAL LOGIN';
+                document.querySelector('.welcome-card h1').textContent = '로그인에 성공했습니다!';
+                document.querySelector('.welcome-subtitle').textContent = '영진전문대학교 포털 서비스에 정상 로그인되었습니다.';
+                document.querySelector('.user-details-card h3').textContent = '로그인 회원 정보';
+            } else {
+                document.querySelector('.badge-success').textContent = 'WELCOME';
+                document.querySelector('.welcome-card h1').textContent = '회원가입이 완료되었습니다!';
+                document.querySelector('.welcome-subtitle').textContent = '영진전문대학교 홈페이지 가입을 진심으로 축하합니다.';
+                document.querySelector('.user-details-card h3').textContent = '등록 정보 (가입 완료)';
+            }
+
             document.getElementById('welcomeNum').textContent = `# ${user.num}`;
             document.getElementById('welcomeId').textContent = user.userId;
             document.getElementById('welcomeEmail').textContent = user.email;
@@ -116,6 +139,47 @@
                 // 세션 스토리지 정보 비우고 복귀
                 sessionStorage.removeItem('currentUser');
                 window.location.href = 'index.html';
+            });
+
+            // 5. 회원 탈퇴 버튼 동작
+            const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+            deleteAccountBtn.addEventListener('click', async () => {
+                const confirmed = confirm('정말로 영진전문대학교 포털 회원 탈퇴를 진행하시겠습니까?\n탈퇴 시 모든 정보가 복구 불가능하게 삭제됩니다.');
+                if (!confirmed) return;
+
+                // Show loading state
+                const originalText = deleteAccountBtn.innerHTML;
+                deleteAccountBtn.disabled = true;
+                deleteAccountBtn.innerHTML = '<span>탈퇴 처리 중...</span>';
+
+                try {
+                    // Delete from main member table
+                    const { error } = await supabase
+                        .from('member')
+                        .delete()
+                        .eq('user_id', user.userId);
+
+                    if (error) {
+                        console.error('Delete member error:', error);
+                    }
+
+                    // Delete from fallback users table silently
+                    await supabase
+                        .from('users')
+                        .delete()
+                        .eq('user_id', user.userId);
+
+                    alert('회원 탈퇴가 성공적으로 처리되었습니다. 이용해 주셔서 감사합니다.');
+                    sessionStorage.removeItem('currentUser');
+                    window.location.href = 'index.html';
+
+                } catch (err) {
+                    console.error('Delete account failed:', err);
+                    alert('탈퇴 처리 중 오류가 발생했습니다.');
+                } finally {
+                    deleteAccountBtn.disabled = false;
+                    deleteAccountBtn.innerHTML = originalText;
+                }
             });
         });
     </script>

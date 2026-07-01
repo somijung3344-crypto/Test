@@ -1,0 +1,5 @@
+node_modules/
+.playwright-mcp/
+matches.txt
+skills-lock.json
+.agents/skills-lock.json

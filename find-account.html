@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영진전문대학교 - 아이디/비밀번호 찾기</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="signup-container">
+        <!-- 좌측 브랜딩 패널 -->
+        <div class="brand-panel">
+            <div class="brand-overlay"></div>
+            <div class="brand-content">
+                <div class="logo-area">
+                    <svg class="yju-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="4"/>
+                        <path d="M30 35H70M50 35V65M40 65H60" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                        <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 2"/>
+                    </svg>
+                    <span class="logo-text">YJU</span>
+                </div>
+                <div class="welcome-text">
+                    <h2>영진전문대학교</h2>
+                    <p class="subtitle">Yeungjin University Portal</p>
+                    <div class="divider"></div>
+                    <p class="desc">창조적 지성과 바른 인성을 갖춘<br>글로벌 인재를 양성합니다.</p>
+                </div>
+                <div class="brand-footer">
+                    <p>© 2026 Yeungjin University. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 우측 찾기 폼 패널 -->
+        <div class="form-panel" style="display: flex; flex-direction: column; justify-content: center; padding: 45px 50px;">
+            <div class="form-header" style="margin-bottom: 25px;">
+                <h1>계정 정보 찾기</h1>
+                <p>가입 시 입력했던 개인정보를 통해 계정을 찾으실 수 있습니다.</p>
+            </div>
+
+            <!-- 상단 탭 버튼 -->
+            <div class="tabs-container">
+                <button type="button" class="tab-btn active" id="tabFindIdBtn">아이디 찾기</button>
+                <button type="button" class="tab-btn" id="tabFindPwdBtn">비밀번호 재설정</button>
+            </div>
+
+            <!-- [1] 아이디 찾기 탭 콘텐츠 -->
+            <div class="tab-content active" id="findIdContent">
+                <form id="findIdForm" novalidate>
+                    <!-- 이메일 입력 필드 -->
+                    <div class="input-group" id="idEmailGroup">
+                        <label for="idEmail">이메일 주소</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            </span>
+                            <input type="email" id="idEmail" placeholder="example@yju.ac.kr" required>
+                        </div>
+                        <div class="validation-msg" id="idEmailMsg">올바른 이메일 형식을 입력해 주세요.</div>
+                    </div>
+
+                    <!-- 전화번호 입력 필드 -->
+                    <div class="input-group" id="idPhoneGroup">
+                        <label for="idPhone">전화번호</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </span>
+                            <input type="tel" id="idPhone" placeholder="010-XXXX-XXXX" maxlength="13" required>
+                        </div>
+                        <div class="validation-msg" id="idPhoneMsg">전화번호 형식(010-XXXX-XXXX)에 맞게 입력해 주세요.</div>
+                    </div>
+
+                    <!-- 결과 표시 박스 -->
+                    <div class="result-box" id="findIdResultBox" style="display: none;">
+                        <h4 id="findIdResultTitle"></h4>
+                        <div class="result-value" id="findIdResultVal"></div>
+                    </div>
+
+                    <!-- 제출 버튼 -->
+                    <button type="submit" class="submit-btn" id="findIdSubmitBtn" style="margin-top: 15px;">
+                        <span>아이디 찾기</span>
+                        <svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- [2] 비밀번호 찾기/재설정 탭 콘텐츠 -->
+            <div class="tab-content" id="findPwdContent">
+                <!-- Step 1: 본인 정보 입력 양식 -->
+                <form id="verifyUserForm" novalidate>
+                    <div class="input-group" id="pwdUserIdGroup">
+                        <label for="pwdUserId">아이디</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </span>
+                            <input type="text" id="pwdUserId" placeholder="가입한 아이디 입력" required>
+                        </div>
+                        <div class="validation-msg" id="pwdUserIdMsg">아이디를 입력해 주세요.</div>
+                    </div>
+
+                    <div class="input-group" id="pwdEmailGroup">
+                        <label for="pwdEmail">이메일 주소</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            </span>
+                            <input type="email" id="pwdEmail" placeholder="example@yju.ac.kr" required>
+                        </div>
+                        <div class="validation-msg" id="pwdEmailMsg">올바른 이메일 형식을 입력해 주세요.</div>
+                    </div>
+
+                    <div class="input-group" id="pwdPhoneGroup">
+                        <label for="pwdPhone">전화번호</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </span>
+                            <input type="tel" id="pwdPhone" placeholder="010-XXXX-XXXX" maxlength="13" required>
+                        </div>
+                        <div class="validation-msg" id="pwdPhoneMsg">전화번호 형식(010-XXXX-XXXX)에 맞게 입력해 주세요.</div>
+                    </div>
+
+                    <div class="validation-msg" id="verifyGlobalMsg" style="margin-bottom: 20px; font-weight: 500; text-align: center;"></div>
+
+                    <button type="submit" class="submit-btn" id="verifySubmitBtn" style="margin-top: 15px;">
+                        <span>회원 정보 확인</span>
+                        <svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </form>
+
+                <!-- Step 2: 비밀번호 변경 양식 (처음에는 숨김) -->
+                <form id="resetPwdForm" novalidate style="display: none;">
+                    <h3 style="font-size: 15px; color: var(--primary-color); margin-bottom: 20px; border-bottom: 1px dashed var(--border-color); padding-bottom: 10px;">🔑 새로운 비밀번호 설정</h3>
+                    
+                    <div class="input-group" id="newPasswordGroup">
+                        <label for="newPassword">새 비밀번호</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </span>
+                            <input type="password" id="newPassword" placeholder="영문, 숫자, 특수문자 조합 8~16자" autocomplete="new-password" required>
+                            <button type="button" class="pwd-toggle-btn" id="toggleNewPwd" aria-label="비밀번호 보기/숨기기">
+                                <svg class="eye-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                <svg class="eye-on hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                        </div>
+                        <div class="pwd-strength-bar">
+                            <div class="strength-fill" id="newStrengthFill"></div>
+                        </div>
+                        <div class="validation-msg" id="newPasswordMsg">비밀번호 조합 조건을 확인하세요.</div>
+                    </div>
+
+                    <div class="input-group" id="newPasswordConfirmGroup">
+                        <label for="newPasswordConfirm">비밀번호 확인</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </span>
+                            <input type="password" id="newPasswordConfirm" placeholder="비밀번호 다시 입력" required>
+                        </div>
+                        <div class="validation-msg" id="newPasswordConfirmMsg">비밀번호가 일치하지 않습니다.</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="resetPwdSubmitBtn" style="margin-top: 15px;">
+                        <span>비밀번호 재설정 완료</span>
+                        <svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- 하단 로그인 연결 텍스트 -->
+            <div class="form-footer-text" style="margin-top: 25px;">
+                생각나셨나요? <a href="login.html">로그인하기</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase SDK 및 로직 통합 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // [A] 탭 전환 동작
+            const tabFindIdBtn = document.getElementById('tabFindIdBtn');
+            const tabFindPwdBtn = document.getElementById('tabFindPwdBtn');
+            const findIdContent = document.getElementById('findIdContent');
+            const findPwdContent = document.getElementById('findPwdContent');
+
+            tabFindIdBtn.addEventListener('click', () => {
+                tabFindIdBtn.classList.add('active');
+                tabFindPwdBtn.classList.remove('active');
+                findIdContent.classList.add('active');
+                findPwdContent.classList.remove('active');
+            });
+
+            tabFindPwdBtn.addEventListener('click', () => {
+                tabFindPwdBtn.classList.add('active');
+                tabFindIdBtn.classList.remove('active');
+                findPwdContent.classList.add('active');
+                findIdContent.classList.remove('active');
+            });
+
+            // [B] Supabase 클라이언트 초기화
+            const { createClient } = window.supabase;
+            const supabaseUrl = 'https://motmnnvwzxppuemgdbwl.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdG1ubnZ3enhwcHVlbWdkYndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4NjAwODksImV4cCI6MjA5ODQzNjA4OX0.BD04zk6zDyK5mBzGUvi7XfXX78GgzfZ9xkUorOGxkOw';
+            const supabase = createClient(supabaseUrl, supabaseKey);
+
+            // [C] 입력 필드 포맷터 (전화번호 자동 하이픈)
+            const formatPhoneInput = (inputEl) => {
+                inputEl.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/[^0-9]/g, '');
+                    if (val.length > 3 && val.length <= 7) {
+                        e.target.value = val.slice(0, 3) + '-' + val.slice(3);
+                    } else if (val.length > 7) {
+                        e.target.value = val.slice(0, 3) + '-' + val.slice(3, 7) + '-' + val.slice(7, 11);
+                    } else {
+                        e.target.value = val;
+                    }
+                });
+            };
+            formatPhoneInput(document.getElementById('idPhone'));
+            formatPhoneInput(document.getElementById('pwdPhone'));
+
+            // [D] 아이디 찾기 폼 핸들러
+            const findIdForm = document.getElementById('findIdForm');
+            const idEmailInput = document.getElementById('idEmail');
+            const idPhoneInput = document.getElementById('idPhone');
+            const idEmailGroup = document.getElementById('idEmailGroup');
+            const idPhoneGroup = document.getElementById('idPhoneGroup');
+            const idEmailMsg = document.getElementById('idEmailMsg');
+            const idPhoneMsg = document.getElementById('idPhoneMsg');
+            const findIdResultBox = document.getElementById('findIdResultBox');
+            const findIdResultTitle = document.getElementById('findIdResultTitle');
+            const findIdResultVal = document.getElementById('findIdResultVal');
+            const findIdSubmitBtn = document.getElementById('findIdSubmitBtn');
+
+            // 에러 초기화 리스너
+            idEmailInput.addEventListener('input', () => {
+                idEmailGroup.classList.remove('error');
+                idEmailMsg.style.display = 'none';
+                findIdResultBox.style.display = 'none';
+            });
+            idPhoneInput.addEventListener('input', () => {
+                idPhoneGroup.classList.remove('error');
+                idPhoneMsg.style.display = 'none';
+                findIdResultBox.style.display = 'none';
+            });
+
+            findIdForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = idEmailInput.value.trim();
+                const phone = idPhoneInput.value.trim();
+
+                let hasError = false;
+
+                // 유효성 검사
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    idEmailGroup.classList.add('error');
+                    idEmailMsg.style.display = 'flex';
+                    hasError = true;
+                }
+                const phoneRegex = /^010-\d{4}-\d{4}$/;
+                if (!phone || !phoneRegex.test(phone)) {
+                    idPhoneGroup.classList.add('error');
+                    idPhoneMsg.style.display = 'flex';
+                    hasError = true;
+                }
+
+                if (hasError) return;
+
+                const originalBtnText = findIdSubmitBtn.innerHTML;
+                findIdSubmitBtn.disabled = true;
+                findIdSubmitBtn.innerHTML = '<span>조회 중...</span>';
+
+                try {
+                    // Supabase member 조회
+                    const { data, error } = await supabase
+                        .from('member')
+                        .select('user_id')
+                        .eq('email', email)
+                        .eq('phone_number', phone);
+
+                    if (error) throw error;
+
+                    findIdResultBox.style.display = 'block';
+
+                    if (!data || data.length === 0) {
+                        findIdResultBox.className = 'result-box error';
+                        findIdResultTitle.textContent = '❌ 조회 실패';
+                        findIdResultVal.textContent = '일치하는 회원 정보가 없습니다.';
+                    } else {
+                        findIdResultBox.className = 'result-box success';
+                        findIdResultTitle.textContent = '🎉 회원 정보 확인 완료';
+                        findIdResultVal.innerHTML = `회원님의 아이디는 <strong style="color: var(--secondary-color);">${data[0].user_id}</strong> 입니다.`;
+                    }
+
+                } catch (err) {
+                    console.error('Find ID error:', err);
+                    alert('아이디 찾기 처리 중 오류가 발생했습니다.');
+                } finally {
+                    findIdSubmitBtn.disabled = false;
+                    findIdSubmitBtn.innerHTML = originalBtnText;
+                }
+            });
+
+            // [E] 비밀번호 재설정 폼 핸들러
+            const verifyUserForm = document.getElementById('verifyUserForm');
+            const resetPwdForm = document.getElementById('resetPwdForm');
+            
+            const pwdUserIdInput = document.getElementById('pwdUserId');
+            const pwdEmailInput = document.getElementById('pwdEmail');
+            const pwdPhoneInput = document.getElementById('pwdPhone');
+            const pwdUserIdGroup = document.getElementById('pwdUserIdGroup');
+            const pwdEmailGroup = document.getElementById('pwdEmailGroup');
+            const pwdPhoneGroup = document.getElementById('pwdPhoneGroup');
+            const pwdUserIdMsg = document.getElementById('pwdUserIdMsg');
+            const pwdEmailMsg = document.getElementById('pwdEmailMsg');
+            const pwdPhoneMsg = document.getElementById('pwdPhoneMsg');
+            const verifyGlobalMsg = document.getElementById('verifyGlobalMsg');
+            const verifySubmitBtn = document.getElementById('verifySubmitBtn');
+
+            let verifiedUserId = null; // 인증된 아이디 저장
+
+            // 에러 초기화 리스너
+            pwdUserIdInput.addEventListener('input', () => { pwdUserIdGroup.classList.remove('error'); pwdUserIdMsg.style.display = 'none'; verifyGlobalMsg.style.display = 'none'; });
+            pwdEmailInput.addEventListener('input', () => { pwdEmailGroup.classList.remove('error'); pwdEmailMsg.style.display = 'none'; verifyGlobalMsg.style.display = 'none'; });
+            pwdPhoneInput.addEventListener('input', () => { pwdPhoneGroup.classList.remove('error'); pwdPhoneMsg.style.display = 'none'; verifyGlobalMsg.style.display = 'none'; });
+
+            // Step 1: 유저 정보 검증
+            verifyUserForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const userId = pwdUserIdInput.value.trim();
+                const email = pwdEmailInput.value.trim();
+                const phone = pwdPhoneInput.value.trim();
+
+                let hasError = false;
+
+                if (!userId) {
+                    pwdUserIdGroup.classList.add('error');
+                    pwdUserIdMsg.style.display = 'flex';
+                    hasError = true;
+                }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    pwdEmailGroup.classList.add('error');
+                    pwdEmailMsg.style.display = 'flex';
+                    hasError = true;
+                }
+                const phoneRegex = /^010-\d{4}-\d{4}$/;
+                if (!phone || !phoneRegex.test(phone)) {
+                    pwdPhoneGroup.classList.add('error');
+                    pwdPhoneMsg.style.display = 'flex';
+                    hasError = true;
+                }
+
+                if (hasError) return;
+
+                const originalBtnText = verifySubmitBtn.innerHTML;
+                verifySubmitBtn.disabled = true;
+                verifySubmitBtn.innerHTML = '<span>회원 정보 확인 중...</span>';
+
+                try {
+                    const { data, error } = await supabase
+                        .from('member')
+                        .select('user_id')
+                        .eq('user_id', userId)
+                        .eq('email', email)
+                        .eq('phone_number', phone);
+
+                    if (error) throw error;
+
+                    if (!data || data.length === 0) {
+                        verifyGlobalMsg.textContent = '일치하는 회원 정보가 없습니다. 다시 확인해 주세요.';
+                        verifyGlobalMsg.style.display = 'flex';
+                        pwdUserIdGroup.classList.add('error');
+                        pwdEmailGroup.classList.add('error');
+                        pwdPhoneGroup.classList.add('error');
+                    } else {
+                        // 인증 성공 -> 비밀번호 재설정 폼 노출
+                        verifiedUserId = data[0].user_id;
+                        verifyUserForm.style.display = 'none';
+                        resetPwdForm.style.display = 'block';
+                    }
+
+                } catch (err) {
+                    console.error('Verify user error:', err);
+                    alert('회원 정보 검증 중 오류가 발생했습니다.');
+                } finally {
+                    verifySubmitBtn.disabled = false;
+                    verifySubmitBtn.innerHTML = originalBtnText;
+                }
+            });
+
+            // Step 2: 비밀번호 변경
+            const newPasswordInput = document.getElementById('newPassword');
+            const newPasswordConfirmInput = document.getElementById('newPasswordConfirm');
+            const newPasswordGroup = document.getElementById('newPasswordGroup');
+            const newPasswordConfirmGroup = document.getElementById('newPasswordConfirmGroup');
+            const newPasswordMsg = document.getElementById('newPasswordMsg');
+            const newPasswordConfirmMsg = document.getElementById('newPasswordConfirmMsg');
+            const newStrengthFill = document.getElementById('newStrengthFill');
+            const toggleNewPwdBtn = document.getElementById('toggleNewPwd');
+            const resetPwdSubmitBtn = document.getElementById('resetPwdSubmitBtn');
+
+            // 비밀번호 토글
+            toggleNewPwdBtn.addEventListener('click', () => {
+                const isPassword = newPasswordInput.getAttribute('type') === 'password';
+                newPasswordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                toggleNewPwdBtn.querySelector('.eye-off').classList.toggle('hidden', isPassword);
+                toggleNewPwdBtn.querySelector('.eye-on').classList.toggle('hidden', !isPassword);
+            });
+
+            // 비밀번호 실시간 안전도 체크 및 검사
+            const validateNewPassword = () => {
+                const val = newPasswordInput.value;
+                let strength = 0;
+                
+                if (val.length >= 8) strength++;
+                if (/[a-zA-Z]/.test(val) && /\d/.test(val)) strength++;
+                if (/[@$!%*?&]/.test(val)) strength++;
+
+                newStrengthFill.className = 'strength-fill';
+                if (strength === 1) {
+                    newStrengthFill.classList.add('weak');
+                    newPasswordMsg.textContent = '쉬운 비밀번호 (영문, 숫자, 특수문자 조합 8~16자)';
+                    newPasswordMsg.style.display = 'flex';
+                } else if (strength === 2) {
+                    newStrengthFill.classList.add('medium');
+                    newPasswordMsg.textContent = '적정 비밀번호 (특수문자 조합 추가 필요)';
+                    newPasswordMsg.style.display = 'flex';
+                } else if (strength === 3) {
+                    newStrengthFill.classList.add('strong');
+                    newPasswordMsg.textContent = '안전한 비밀번호입니다.';
+                    newPasswordMsg.style.display = 'flex';
+                } else {
+                    newPasswordMsg.style.display = 'none';
+                }
+
+                const isValid = val.length >= 8 && val.length <= 16 && /[a-zA-Z]/.test(val) && /\d/.test(val) && /[@$!%*?&]/.test(val);
+                if (isValid) {
+                    newPasswordGroup.classList.remove('error');
+                    newPasswordMsg.style.color = 'var(--success-color)';
+                } else {
+                    newPasswordMsg.style.color = 'var(--error-color)';
+                }
+                return isValid;
+            };
+
+            const validateNewPasswordConfirm = () => {
+                const match = newPasswordInput.value === newPasswordConfirmInput.value;
+                if (match && newPasswordConfirmInput.value) {
+                    newPasswordConfirmGroup.classList.remove('error');
+                    newPasswordConfirmMsg.style.display = 'none';
+                } else if (newPasswordConfirmInput.value) {
+                    newPasswordConfirmGroup.classList.add('error');
+                    newPasswordConfirmMsg.style.display = 'flex';
+                }
+                return match;
+            };
+
+            newPasswordInput.addEventListener('input', () => { validateNewPassword(); validateNewPasswordConfirm(); });
+            newPasswordConfirmInput.addEventListener('input', validateNewPasswordConfirm);
+
+            resetPwdForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const isPwdValid = validateNewPassword();
+                const isMatch = validateNewPasswordConfirm();
+
+                if (!isPwdValid) {
+                    newPasswordGroup.classList.add('error');
+                    newPasswordMsg.textContent = '영문, 숫자, 특수문자 조합 8~16자 조건을 만족해야 합니다.';
+                    newPasswordMsg.style.display = 'flex';
+                    newPasswordInput.focus();
+                    return;
+                }
+                if (!isMatch) {
+                    newPasswordConfirmGroup.classList.add('error');
+                    newPasswordConfirmMsg.style.display = 'flex';
+                    newPasswordConfirmInput.focus();
+                    return;
+                }
+
+                const originalBtnText = resetPwdSubmitBtn.innerHTML;
+                resetPwdSubmitBtn.disabled = true;
+                resetPwdSubmitBtn.innerHTML = '<span>변경 사항 반영 중...</span>';
+
+                try {
+                    // Update password on main member table
+                    const { error } = await supabase
+                        .from('member')
+                        .update({ password: newPasswordInput.value })
+                        .eq('user_id', verifiedUserId);
+
+                    if (error) throw error;
+
+                    // Update password on fallback users table silently
+                    await supabase
+                        .from('users')
+                        .update({ password: newPasswordInput.value })
+                        .eq('user_id', verifiedUserId);
+
+                    alert('비밀번호가 성공적으로 변경되었습니다!\n새로운 비밀번호로 로그인해 주세요.');
+                    window.location.href = 'login.html';
+
+                } catch (err) {
+                    console.error('Reset password error:', err);
+                    alert('비밀번호 재설정 중 오류가 발생했습니다.');
+                    resetPwdSubmitBtn.disabled = false;
+                    resetPwdSubmitBtn.innerHTML = originalBtnText;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

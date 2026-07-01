@@ -1038,6 +1038,20 @@ body {
     border-color: var(--text-light);
 }
 
+.danger-action {
+    background-color: transparent;
+    color: var(--error-color);
+    border: 1.5px solid rgba(235, 87, 87, 0.3);
+}
+
+.danger-action:hover {
+    background-color: rgba(235, 87, 87, 0.05);
+    color: var(--error-color);
+    border-color: var(--error-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
 .action-btn svg {
     transition: transform var(--transition-fast);
 }
@@ -1048,6 +1062,10 @@ body {
 
 .secondary-action:hover svg {
     transform: translateX(-4px);
+}
+
+.danger-action:hover svg {
+    transform: scale(1.15) rotate(5deg);
 }
 
 /* Confetti decorations background elements */
@@ -1111,4 +1129,96 @@ body {
     .user-details-card {
         padding: 20px 20px;
     }
+}
+
+/* Page switching link styles */
+.form-footer-text {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+}
+
+.form-footer-text a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 5px;
+    transition: color var(--transition-fast);
+}
+
+.form-footer-text a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Find Account Tabs */
+.tabs-container {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+    color: var(--primary-color);
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Result Box for Credentials search */
+.result-box {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: var(--bg-main);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+}
+
+.result-box.success h4 {
+    color: var(--success-color);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.result-box.error h4 {
+    color: var(--error-color);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.result-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 15px 0;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.5px;
 }
