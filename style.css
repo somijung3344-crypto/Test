@@ -1,0 +1,1114 @@
+/* 
+  Yeungjin University Sign-Up Premium Styling
+  Brand Colors: 
+  - YJU Navy: #0B3364
+  - YJU Navy Light: #164684
+  - YJU Gold/Orange: #F0810F
+  - Background Neutral: #F5F7FB
+*/
+
+:root {
+    --primary-color: #0B3364;
+    --primary-light: #1E5094;
+    --secondary-color: #F0810F;
+    --secondary-light: #FFA03A;
+    --success-color: #27AE60;
+    --error-color: #EB5757;
+    --text-primary: #1C2A38;
+    --text-secondary: #6F7D8E;
+    --text-light: #9DA8B6;
+    --bg-main: #F4F6FC;
+    --bg-card: #FFFFFF;
+    --border-color: #E2E8F0;
+    --input-focus: rgba(11, 51, 100, 0.15);
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --border-radius-sm: 8px;
+    --border-radius-md: 16px;
+    --border-radius-lg: 24px;
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   Layout Containers
+   ========================================== */
+.signup-container {
+    width: 100%;
+    max-width: 1100px;
+    min-height: 720px;
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    display: grid;
+    grid-template-columns: 42% 58%;
+    overflow: hidden;
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Left Brand Panel */
+.brand-panel {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #061B35 100%);
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 50px;
+    overflow: hidden;
+}
+
+/* Diagonal Background Pattern Accent */
+.brand-panel::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 100%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(240, 129, 15, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+    transform: rotate(-15deg);
+}
+
+.brand-overlay {
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.brand-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.yju-logo-svg {
+    width: 42px;
+    height: 42px;
+    color: var(--secondary-color);
+    animation: rotateSlow 20s linear infinite;
+}
+
+.logo-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    background: linear-gradient(to right, #FFFFFF 40%, var(--secondary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome-text {
+    margin-top: 80px;
+    margin-bottom: auto;
+}
+
+.welcome-text h2 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+.welcome-text .subtitle {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    color: var(--secondary-color);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.welcome-text .divider {
+    width: 50px;
+    height: 4px;
+    background-color: var(--secondary-color);
+    margin: 24px 0;
+    border-radius: 2px;
+}
+
+.welcome-text .desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 300;
+}
+
+.brand-footer {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Right Form Panel */
+.form-panel {
+    padding: 50px 60px;
+    overflow-y: auto;
+    max-height: 760px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-header {
+    margin-bottom: 32px;
+}
+
+.form-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.form-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* ==========================================
+   Form Fields Styling
+   ========================================== */
+.input-group {
+    margin-bottom: 22px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.required {
+    color: var(--error-color);
+    font-weight: bold;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 48px;
+    padding: 0 44px;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: 14px;
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+    outline: none;
+    transition: all var(--transition-fast);
+}
+
+/* Input states */
+.input-wrapper input::placeholder {
+    color: var(--text-light);
+}
+
+.input-wrapper input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 4px var(--input-focus);
+    background-color: #FFFFFF;
+}
+
+/* Left input icons */
+.input-icon {
+    position: absolute;
+    left: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    pointer-events: none;
+    transition: color var(--transition-fast);
+}
+
+.input-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.input-wrapper input:focus ~ .input-icon {
+    color: var(--primary-light);
+}
+
+/* Right validation status indicators */
+.status-icon {
+    position: absolute;
+    right: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all var(--transition-fast);
+    pointer-events: none;
+}
+
+.success-icon {
+    color: var(--success-color);
+}
+
+.error-icon {
+    color: var(--error-color);
+}
+
+/* Show icons under validation classes */
+.input-group.success .status-icon.success-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.input-group.success input {
+    border-color: var(--success-color);
+    background-color: rgba(39, 174, 96, 0.02);
+}
+
+.input-group.error .status-icon.error-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.input-group.error input {
+    border-color: var(--error-color);
+    background-color: rgba(235, 87, 87, 0.02);
+}
+
+/* Password eye button positioning */
+.pwd-toggle-btn {
+    position: absolute;
+    right: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    outline: none;
+    transition: color var(--transition-fast);
+}
+
+.pwd-toggle-btn:hover {
+    color: var(--text-secondary);
+}
+
+.pwd-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Validation Messages */
+.validation-msg {
+    font-size: 12px;
+    color: var(--error-color);
+    margin-top: 2px;
+    display: none;
+    align-items: center;
+    gap: 4px;
+    animation: slideDownFade 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.input-group.error .validation-msg {
+    display: flex;
+}
+
+/* Password Strength Bar */
+.pwd-strength-bar {
+    width: 100%;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: -4px;
+    display: none;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--error-color);
+    transition: width var(--transition-normal), background-color var(--transition-normal);
+}
+
+/* ==========================================
+   Terms agreement checkbox
+   ========================================== */
+.checkbox-group {
+    margin-top: 8px;
+    margin-bottom: 30px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.custom-checkbox {
+    position: relative;
+    height: 20px;
+    width: 20px;
+    background-color: var(--bg-card);
+    border: 1.5px solid var(--border-color);
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+    margin-right: 10px;
+}
+
+.checkbox-container:hover input ~ .custom-checkbox {
+    border-color: var(--primary-light);
+}
+
+.checkbox-container input:checked ~ .custom-checkbox {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.custom-checkbox::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #FFFFFF;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-container input:checked ~ .custom-checkbox::after {
+    display: block;
+}
+
+.checkbox-label {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+}
+
+/* ==========================================
+   Action Button
+   ========================================== */
+.submit-btn {
+    width: 100%;
+    height: 52px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(135deg, var(--primary-light) 0%, #2968ba 100%);
+}
+
+.submit-btn:hover::before {
+    transform: translateX(100%);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--transition-fast);
+}
+
+.submit-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* ==========================================
+   Success Modal Window
+   ========================================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(6, 27, 53, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background-color: var(--bg-card);
+    width: 100%;
+    max-width: 480px;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 35px;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-overlay.active .modal-card {
+    transform: scale(1) translateY(0);
+}
+
+/* Custom Success Checkmark Animation */
+.success-checkmark {
+    width: 80px;
+    height: 80px;
+    margin: 10px 0 20px;
+}
+
+.check-icon {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    border-radius: 50%;
+    box-sizing: content-box;
+    border: 4px solid var(--success-color);
+}
+
+.check-icon::before, .check-icon::after {
+    content: '';
+    height: 100px;
+    position: absolute;
+    background: var(--bg-card);
+    transform: rotate(-45deg);
+}
+
+.check-icon::before {
+    width: 30px;
+    border-radius: 100px 0 0 100px;
+    top: -12px;
+    left: -9px;
+    transform-origin: 100% 50%;
+}
+
+.check-icon::after {
+    width: 120px;
+    border-radius: 0 100px 100px 0;
+    top: -26px;
+    left: 30px;
+    transform-origin: 0 50%;
+}
+
+.icon-line {
+    height: 5px;
+    background-color: var(--success-color);
+    display: block;
+    border-radius: 2px;
+    position: absolute;
+    z-index: 10;
+}
+
+.icon-line.line-tip {
+    width: 25px;
+    left: 14px;
+    top: 46px;
+    transform: rotate(45deg);
+    animation: icon-line-tip 0.75s;
+}
+
+.icon-line.line-long {
+    width: 47px;
+    right: 8px;
+    top: 38px;
+    transform: rotate(-45deg);
+    animation: icon-line-long 0.75s;
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid rgba(39, 174, 96, 0.2);
+    box-sizing: content-box;
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    z-index: 1;
+}
+
+.icon-fix {
+    width: 5px;
+    height: 90px;
+    background-color: var(--bg-card);
+    position: absolute;
+    left: 28px;
+    top: -8px;
+    z-index: 1;
+    transform: rotate(-45deg);
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.modal-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.modal-body {
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.user-info-summary {
+    background-color: var(--bg-main);
+    border-radius: var(--border-radius-sm);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13.5px;
+}
+
+.info-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.info-value {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.status-badge {
+    color: var(--success-color);
+    background-color: rgba(39, 174, 96, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.modal-tip {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.modal-tip p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.modal-footer {
+    width: 100%;
+}
+
+.modal-close-btn {
+    width: 100%;
+    height: 48px;
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+    background-color: var(--primary-light);
+}
+
+/* ==========================================
+   Animations
+   ========================================== */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes icon-line-tip {
+    0% {
+        width: 0;
+        left: 1px;
+        top: 19px;
+    }
+    54% {
+        width: 0;
+        left: 1px;
+        top: 19px;
+    }
+    70% {
+        width: 50px;
+        left: -8px;
+        top: 37px;
+    }
+    84% {
+        width: 17px;
+        left: 21px;
+        top: 48px;
+    }
+    100% {
+        width: 25px;
+        left: 14px;
+        top: 46px;
+    }
+}
+
+@keyframes icon-line-long {
+    0% {
+        width: 0;
+        right: 46px;
+        top: 54px;
+    }
+    65% {
+        width: 0;
+        right: 46px;
+        top: 54px;
+    }
+    84% {
+        width: 55px;
+        right: 0px;
+        top: 35px;
+    }
+    100% {
+        width: 47px;
+        right: 8px;
+        top: 38px;
+    }
+}
+
+/* ==========================================
+   Responsive Media Queries
+   ========================================== */
+@media (max-width: 900px) {
+    .signup-container {
+        grid-template-columns: 1fr;
+        max-width: 550px;
+        min-height: auto;
+    }
+    
+    .brand-panel {
+        display: none; /* Hide brand panel on tablets */
+    }
+    
+    .form-panel {
+        padding: 40px 35px;
+        max-height: none;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .signup-container {
+        border-radius: var(--border-radius-md);
+    }
+    
+    .form-panel {
+        padding: 30px 20px;
+    }
+    
+    .form-header h1 {
+        font-size: 24px;
+    }
+    
+    .input-wrapper input {
+        height: 44px;
+        padding: 0 40px;
+    }
+    
+    .input-icon {
+        left: 12px;
+    }
+    
+    .pwd-toggle-btn {
+        right: 12px;
+    }
+    
+    .modal-card {
+        padding: 25px 15px;
+    }
+}
+
+/* ==========================================
+   Welcome Page Specific Styling
+   ========================================== */
+.welcome-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    padding: 20px;
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.welcome-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 50px 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.welcome-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+}
+
+.welcome-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+.welcome-logo .yju-logo-svg {
+    width: 40px;
+    height: 40px;
+    color: var(--secondary-color);
+}
+
+.welcome-logo .logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    color: var(--primary-color);
+    background: none;
+    -webkit-text-fill-color: initial;
+}
+
+.badge-success {
+    background-color: rgba(39, 174, 96, 0.1);
+    color: var(--success-color);
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+
+.welcome-card h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 35px;
+}
+
+/* User Details Card inside Welcome */
+.user-details-card {
+    width: 100%;
+    background-color: var(--bg-main);
+    border-radius: var(--border-radius-md);
+    padding: 24px 28px;
+    margin-bottom: 30px;
+    text-align: left;
+    border: 1px solid var(--border-color);
+}
+
+.user-details-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+}
+
+.detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.detail-value {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.detail-value.highlight-num {
+    color: var(--secondary-color);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+}
+
+.welcome-guide {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 35px;
+}
+
+/* Welcome Actions Buttons */
+.welcome-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.action-btn {
+    width: 100%;
+    height: 50px;
+    border-radius: var(--border-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.primary-action {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.primary-action:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.secondary-action {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border-color);
+}
+
+.secondary-action:hover {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    border-color: var(--text-light);
+}
+
+.action-btn svg {
+    transition: transform var(--transition-fast);
+}
+
+.primary-action:hover svg {
+    transform: translate(2px, -2px);
+}
+
+.secondary-action:hover svg {
+    transform: translateX(-4px);
+}
+
+/* Confetti decorations background elements */
+.confetti-decor {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+.decor-1 {
+    width: 120px;
+    height: 120px;
+    background-color: var(--secondary-color);
+    top: -40px;
+    left: -40px;
+    filter: blur(20px);
+    animation: floatDecor 8s ease-in-out infinite alternate;
+}
+
+.decor-2 {
+    width: 160px;
+    height: 160px;
+    background-color: var(--primary-color);
+    bottom: -60px;
+    right: -40px;
+    filter: blur(30px);
+    animation: floatDecor 12s ease-in-out infinite alternate-reverse;
+}
+
+.decor-3 {
+    width: 80px;
+    height: 80px;
+    background-color: var(--success-color);
+    top: 50%;
+    right: -20px;
+    filter: blur(15px);
+    animation: floatDecor 10s ease-in-out infinite alternate;
+}
+
+@keyframes floatDecor {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        transform: translate(20px, -20px) scale(1.1);
+    }
+}
+
+/* Welcome Page Responsive */
+@media (max-width: 640px) {
+    .welcome-card {
+        padding: 40px 25px;
+    }
+    
+    .welcome-card h1 {
+        font-size: 22px;
+    }
+    
+    .user-details-card {
+        padding: 20px 20px;
+    }
+}

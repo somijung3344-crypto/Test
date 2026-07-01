@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영진전문대학교 - 가입 완료</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="welcome-container">
+        <!-- 축하 데코레이션 배경 효과 -->
+        <div class="confetti-decor decor-1"></div>
+        <div class="confetti-decor decor-2"></div>
+        <div class="confetti-decor decor-3"></div>
+
+        <div class="welcome-card">
+            <!-- 탑 헤더 영역 (YJU 로고) -->
+            <div class="welcome-logo">
+                <svg class="yju-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="4"/>
+                    <path d="M30 35H70M50 35V65M40 65H60" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                    <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 2"/>
+                </svg>
+                <span class="logo-text">YJU</span>
+            </div>
+
+            <!-- 축하 뱃지 및 타이틀 -->
+            <div class="badge-success">WELCOME</div>
+            <h1>회원가입이 완료되었습니다!</h1>
+            <p class="welcome-subtitle">영진전문대학교 홈페이지 가입을 진심으로 축하합니다.</p>
+
+            <!-- 등록된 유저 정보 상세 카드 -->
+            <div class="user-details-card">
+                <h3>등록 정보 (가입 완료)</h3>
+                <div class="detail-row">
+                    <span class="detail-label">고유 번호 (Number)</span>
+                    <span class="detail-value highlight-num" id="welcomeNum">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">아이디 (ID)</span>
+                    <span class="detail-value" id="welcomeId">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">이메일 (Email)</span>
+                    <span class="detail-value" id="welcomeEmail">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">전화번호 (Phone)</span>
+                    <span class="detail-value" id="welcomePhone">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">가입 일시</span>
+                    <span class="detail-value" id="welcomeDate">-</span>
+                </div>
+            </div>
+
+            <!-- 안내 메세지 -->
+            <p class="welcome-guide">
+                가입하신 아이디로 로그인하시면 대학 정보 서비스, 도서관 서비스 및 학사 정보 조회 등 영진전문대학교의 다양한 포털 혜택을 즉시 누리실 수 있습니다.
+            </p>
+
+            <!-- 버튼 동작 영역 -->
+            <div class="welcome-actions">
+                <a href="https://www.yju.ac.kr" class="action-btn primary-action" target="_blank" rel="noopener noreferrer">
+                    <span>영진전문대 홈페이지 바로가기</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+                <button type="button" class="action-btn secondary-action" id="backToSignupBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 12l6-6M3 12l6 6"/></svg>
+                    <span>다시 회원가입하기</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 스크립트 실행으로 데이터 불러오기 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Session Storage 에서 가입 유저 정보 획득
+            const rawUser = sessionStorage.getItem('currentUser');
+            
+            // 2. 비정상적인 접근 차단 (가입 정보가 없을 시 가입 화면으로 자동 리다이렉트)
+            if (!rawUser) {
+                alert('가입 정보가 없습니다. 회원가입을 먼저 진행해 주세요.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const user = JSON.parse(rawUser);
+
+            // 3. UI 바인딩
+            document.getElementById('welcomeNum').textContent = `# ${user.num}`;
+            document.getElementById('welcomeId').textContent = user.userId;
+            document.getElementById('welcomeEmail').textContent = user.email;
+            document.getElementById('welcomePhone').textContent = user.phone;
+
+            // 가입 일시 포맷팅
+            const signupDate = new Date(user.created_at);
+            const formattedDate = signupDate.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('welcomeDate').textContent = formattedDate;
+
+            // 4. 다시 가입하기 버튼 동작
+            const backToSignupBtn = document.getElementById('backToSignupBtn');
+            backToSignupBtn.addEventListener('click', () => {
+                // 세션 스토리지 정보 비우고 복귀
+                sessionStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>
